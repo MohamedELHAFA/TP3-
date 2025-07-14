@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv
+env/
+venv/
+pip-wheel-metadata/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Logs
+*.log
+
+# MacOS
+.DS_Store
+
+# Virtual environment files
+*.env
+*.venv
+
+# MinIO artifacts (if downloaded locally)
+minio_data/
+minio_tmp/
+
+# Parquet / data files
+*.parquet
+*.csv
+*.json
+
+# Model artifacts
+*.pkl
+*.joblib
+
+# Boto3 AWS credentials (if mistakenly added)
+.aws/
+
+# Misc
+*.zip
+*.tar
+*.gz
+
+# Node (if frontend or dashboard has JS)
+node_modules/
+npm-debug.log*
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# JetBrains
+*.iml
+out/
+
+# Pytest cache
+.pytest_cache/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+# Docker
+*.container
+*.log
+docker-compose.override.yml
