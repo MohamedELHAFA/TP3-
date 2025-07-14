@@ -1,7 +1,6 @@
 version: '2.4'
 
 services:
-  # ======== MINIO (S3 local) ========
   minio:
     image: minio/minio:latest
     container_name: minio
@@ -14,116 +13,6 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
-    networks:
-      vanetzalan0:
-        ipv4_address: 192.168.98.70
-
-  # ======== RSU ========
-  rsu:
-    hostname: rsu
-    restart: always
-    image: code.nap.av.it.pt:5050/mobility-networks/vanetza:latest
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - VANETZA_STATION_ID=5
-      - VANETZA_STATION_TYPE=15
-      - VANETZA_MAC_ADDRESS=6e:06:e0:03:00:01
-      - VANETZA_INTERFACE=br0
-      - START_EMBEDDED_MOSQUITTO=true
-      - SUPPORT_MAC_BLOCKING=true
-    ports:
-      - "18830:1883"
-    networks:
-      vanetzalan0:
-        ipv4_address: 192.168.98.10
-    sysctls:
-      kernel.msgmax:  65536
-      kernel.msgmnb:  65536
-    depends_on:
-      - minio
-
-  # ======== OBU 1 ========
-  obu1:
-    hostname: obu1
-    restart: always
-    image: code.nap.av.it.pt:5050/mobility-networks/vanetza:latest
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - VANETZA_STATION_ID=1
-      - VANETZA_STATION_TYPE=5
-      - VANETZA_MAC_ADDRESS=6e:06:e0:03:00:11
-      - VANETZA_INTERFACE=br0
-      - START_EMBEDDED_MOSQUITTO=true
-      - SUPPORT_MAC_BLOCKING=true
-      - VANETZA_CAM_PERIODICITY=0
-    ports:
-      - "18831:1883"
-    networks:
-      vanetzalan0:
-        ipv4_address: 192.168.98.20
-    sysctls:
-      kernel.msgmax:  16384
-    depends_on:
-      - rsu
-
-  # ======== OBU 2 ========
-  obu2:
-    hostname: obu2
-    restart: always
-    image: code.nap.av.it.pt:5050/mobility-networks/vanetza:latest
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - VANETZA_STATION_ID=2
-      - VANETZA_STATION_TYPE=5
-      - VANETZA_MAC_ADDRESS=6e:06:e0:03:00:12
-      - VANETZA_INTERFACE=br0
-      - START_EMBEDDED_MOSQUITTO=true
-      - SUPPORT_MAC_BLOCKING=true
-      - VANETZA_CAM_PERIODICITY=0
-    ports:
-      - "18832:1883"
-    networks:
-      vanetzalan0:
-        ipv4_address: 192.168.98.30
-    sysctls:
-      kernel.msgmax:  16384
-    depends_on:
-      - rsu
-
-  # ======== OBU 3 ========
-  obu3:
-    hostname: obu3
-    restart: always
-    image: code.nap.av.it.pt:5050/mobility-networks/vanetza:latest
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - VANETZA_STATION_ID=3
-      - VANETZA_STATION_TYPE=5
-      - VANETZA_MAC_ADDRESS=6e:06:e0:03:00:13
-      - VANETZA_INTERFACE=br0
-      - START_EMBEDDED_MOSQUITTO=true
-      - SUPPORT_MAC_BLOCKING=true
-      - VANETZA_CAM_PERIODICITY=0
-    ports:
-      - "18833:1883"
-    networks:
-      vanetzalan0:
-        ipv4_address: 192.168.98.40
-    sysctls:
-      kernel.msgmax:  16384
-    depends_on:
-      - rsu
-
-networks:
-  vanetzalan0:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.98.0/24
 
 volumes:
   minio_data:
